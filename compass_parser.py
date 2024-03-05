@@ -101,8 +101,8 @@ if __name__ == "__main__":
         host="127.0.0.1", 
         #database="prospector",
         #user="Jennifer",
-        database= "raven_prospector"
-        user= "postgres"
+        database= "raven_prospector",
+        user= "postgres",
         password="Bigbear5k$",
         port=5432
     )  
