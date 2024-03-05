@@ -99,8 +99,10 @@ def get_compass_building_info(address: str):
 if __name__ == "__main__":
     connection= psycopg2.connect(
         host="127.0.0.1", 
-        database="prospector",
-        user="Jennifer",
+        #database="prospector",
+        #user="Jennifer",
+        database= "raven_prospector"
+        user= "postgres"
         password="Bigbear5k$",
         port=5432
     )  
@@ -108,8 +110,11 @@ if __name__ == "__main__":
     cursor.execute("SELECT id, associationaddress FROM properties")
     for uid, address in cursor.fetchall():
         print(address)
-        extracted_info = get_compass_building_info(address)
-        print(extracted_info)
-        if extracted_info:
-            cursor.execute('INSERT INTO properties_realtor_params(property_id, year_built, stories, units, correct_address, photo_link, street_address) VALUES (%s,%s, %s, %s, %s, %s,%s);',[uid,*extracted_info])
-            connection.commit()
+        try:
+
+            extracted_info = get_compass_building_info(address)
+            print(extracted_info)
+            if extracted_info:
+                cursor.execute('INSERT INTO properties_realtor_params(property_id, year_built, stories, units, correct_address, photo_link, street_address) VALUES (%s,%s, %s, %s, %s, %s,%s);',[uid,*extracted_info])
+                connection.commit()
+        except: print('problem with proxy')
